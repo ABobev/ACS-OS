@@ -1,0 +1,316 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    outline: none;
+    transition: 1s;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+
+div#menu {
+    left: 0;
+    position: absolute;
+    background: linear-gradient(181deg, #667eea, #764ba2, #89f7fe, #66a6ff, #13547a, #80d0c7);
+    background-size: 1200% 1200%;
+
+    -webkit-animation: MenuGradient 60s ease infinite;
+    -moz-animation: MenuGradient 60s ease infinite;
+    -o-animation: MenuGradient 60s ease infinite;
+    animation: MenuGradient 60s ease infinite;
+
+    opacity: 0.7;
+    height: 100vh;
+    width: 5vw;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+@-webkit-keyframes MenuGradient {
+    0% {
+        background-position: 50% 0%
+    }
+
+    50% {
+        background-position: 50% 100%
+    }
+
+    100% {
+        background-position: 50% 0%
+    }
+}
+
+@-moz-keyframes MenuGradient {
+    0% {
+        background-position: 50% 0%
+    }
+
+    50% {
+        background-position: 50% 100%
+    }
+
+    100% {
+        background-position: 50% 0%
+    }
+}
+
+@-o-keyframes MenuGradient {
+    0% {
+        background-position: 50% 0%
+    }
+
+    50% {
+        background-position: 50% 100%
+    }
+
+    100% {
+        background-position: 50% 0%
+    }
+}
+
+@keyframes MenuGradient {
+    0% {
+        background-position: 50% 0%
+    }
+
+    50% {
+        background-position: 50% 100%
+    }
+
+    100% {
+        background-position: 50% 0%
+    }
+}
+
+div#menu:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    opacity: 1;
+
+}
+
+div#menu > * {
+    width: 4vw;
+    align-self: center;
+    margin-top: 1vh;
+    opacity: 1;
+    transition: 0.8s;
+}
+
+div#menu > *:hover {
+    transform: scale(1.15, 1.15);
+}
+div#SR{z-index:6}
+div.button{
+    display: inline-block;
+    padding: calc(0.2vh + 0.2vw);
+    margin-left: calc(0.7vh + 0.7vw);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius:0.2em;
+    background-color:white;
+    font-size:2vmax;
+}
+div.button:hover{
+    transform:scale(1.1,1.1);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 0;
+    
+}
+div#MathLabel{
+    
+    transform:translate(0%);
+ position:fixed;
+    width:20vw;
+    left:40vw;
+    padding-top:1vh;
+        padding-bottom:1vh;
+
+    border-bottom-right-radius:1em;
+        border-bottom-left-radius:1em;
+
+    font-size:3vmax;
+    top:0;
+    text-align:center;
+    background-color:black;
+    color:white;
+    
+}
+hr{width:100%}
+
+
+div.window{
+    
+    display: flex;
+  align-items: center;
+  justify-content: center;
+    box-sizing: border-box;
+    padding:calc(2vh + 2vw);
+    height:100vh;
+    width:95vw;   
+    background-color:white;
+    position:absolute;
+    left:0;
+    top:0;
+    display:none;
+    white-space: nowrap;
+    display:flex;
+    flex-wrap:wrap;
+    background-color:#ecf0f1;
+}
+img.back{
+    position:fixed;
+    right:2vw;
+    bottom:2vw;
+    height:10vh;
+}
+img.back:hover{
+transform:scale(1.1,1.1);
+}
+div.window>input{
+    height:5vh;
+    font-size:2vmax;
+    width:10ch;
+    border:none;
+    border-bottom:1px solid black;
+    text-align:center;
+    background-color:#ecf0f1;
+    
+    
+}
+
+div.window>p{
+    font-size:2vmax;
+    margin-left:1vmax;
+    margin-right:1vmax;
+
+}
+div#clock {
+    position: absolute;
+    left: 10vw;
+    top: 5vh;
+    width: 35vw;
+    text-align: center;
+    font-size: 7vmax;
+    position: absolute;
+    background-color: white;
+    border-radius: 0.1em;
+    padding: calc(0.2vh + 0.2vw);
+    opacity: 0.8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+div#mathDIV {
+    top: 0;
+    position: absolute;
+    width: 95vw;
+    height: 100vh;
+    margin-left: 5vw;
+    background-color: #ecf0f1;
+    z-index: 5;
+    display: none;
+    padding:calc(1vh + 1vw);
+    
+}
+
+div#clock:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 0;
+}
+
+div#clock:focus {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 0;
+}
+
+textarea#shortText {
+    padding: calc(0.5vh + 0.5vw);
+    border: none;
+    position: absolute;
+    top: 5vh;
+    right: 2vw;
+    width: 48vw;
+    height: 90vh;
+    opacity: 0.8;
+    font-size: 3vmax;
+    resize: none;
+    border-radius: 0.2em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+div#calculator {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    position: absolute;
+    left: 10vw;
+    height: auto;
+    padding: calc(0.1vh + 0.1vw);
+    width: 35vw;
+    bottom: 5vh;
+    background-color: white;
+    border-radius: 0.5em;
+    opacity: 0.8;
+}
+
+div#calculator:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 0;
+}
+
+div#calculator:focus {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 0;
+}
+
+#calculator > form > input[type=text] {
+    width: 32.5vw;
+    background-color: white;
+    box-shadow: none;
+    color: black;
+    font-size: 3vmax;
+}
+
+#calculator > form > * {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background-color: black;
+    border: none;
+    border-radius: 0.2em;
+    color: white;
+    text-align: center;
+    width: 10vw;
+    margin-left: 1vw;
+    margin-bottom: 1vw;
+    font-size: 3vmax;
+
+}
+
+#calculator > form > input[type="button"]:nth-child(22) {
+    width: 32.5vw !important;
+
+}
+
+div#calculator:hover {
+    border-radius: 0;
+    opacity: 1;
+}
+
+textarea#shortText:hover {
+    opacity: 1;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 0;
+}
+
+textarea#shortText:focus {
+    opacity: 1;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 0;
+}
+
+body#random {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    object-fit: cover;
+}

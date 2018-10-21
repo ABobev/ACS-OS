@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>ACS OS</title>
+</head>
+
+<body onload='TextArea()' id='random'>
+    <div id='menu'>
+        <img onClick="Visibility('mathDIV');" draggable="false" src='images/Math.svg' id='math'></img>
+    </div>
+    <div id="clock"></div>
+    <div id="calculator">
+        <form name="calculator">
+
+            <input id='result' type="text" name="answer" />
+
+            <br>
+
+            <input type="button" value=" 1 " onclick="calculator.answer.value += '1'" />
+
+            <input type="button" value=" 2 " onclick="calculator.answer.value += '2'" />
+
+            <input type="button" value=" 3 " onclick="calculator.answer.value += '3'" />
+
+            <br />
+
+            <input type="button" value=" 4 " onclick="calculator.answer.value += '4'" />
+
+            <input type="button" value=" 5 " onclick="calculator.answer.value += '5'" />
+
+            <input type="button" value=" 6 " onclick="calculator.answer.value += '6'" />
+
+            </br>
+
+            <input type="button" value=" 7 " onclick="calculator.answer.value += '7'" />
+
+            <input type="button" value=" 8 " onclick="calculator.answer.value += '8'" />
+
+            <input type="button" value=" 9 " onclick="calculator.answer.value += '9'" />
+
+            </br>
+
+            <input type="button" value=" x " onclick="calculator.answer.value += '*'" />
+
+            <input type="button" value=" c " onclick="calculator.answer.value = ''" />
+
+            <input type="button" value=" 0 " onclick="calculator.answer.value += '0'" />
+
+            <input type="button" value=" / " onclick="calculator.answer.value += '/'" />
+
+            <input type="button" value=" + " onclick="calculator.answer.value += '+'" />
+
+            <input type="button" value=" - " onclick="calculator.answer.value += '-'" />
+
+            </br>
+
+            <input type="button" value="=" onclick="calculator.answer.value = eval(calculator.answer.value)" />
+
+        </form>
+
+    </div>
+
+
+    <textarea onchange='SaveTextArea()' onkeyup='SaveTextArea()' placeholder='Write here...' id='shortText'></textarea>
+    <div id='mathDIV'>
+        <div id='MathLabel'>Calculators</div>
+        <div onClick='$("div#percentage").show();' class='button'>Percentage</div>
+        <div onClick='$("div#SR").show();' class='button'>Square root</div>
+        <div class='window' id='percentage'>
+            <input type='number' id='per1'></input>
+            <p>% of </p>
+            <input type='number' id='per2'></input>
+            <p id='perEnd'>is</p>
+            <div onClick='Percentage()' class='button'>Calculate</div>
+            <hr>
+            <input type='number' id='per3'></input>
+            <p> is what percentage of </p><input id='per4' type='number'></input>
+            <p id='perEnd2'></p>
+            <div onClick='Percentage2()' class='button'>Calculate</div>
+            <hr>
+            <p>What is the percentage increase/decrease from</p>
+            <input id='per5' type='number'></input>
+            <p> to </p><input type='number' id='per6'></input>
+            <p>?</p>
+            <p id='perEnd3'></p>
+            <div onClick='Percentage3()' class='button'>Calculate</div>
+            <hr>
+            <input type='number' id='per7'></input>
+            <p> is </p><input id='per8'></input>
+            <p>% of what</p>
+            <p id='perEnd4'></p>
+            <div onClick='Percentage4()' class='button'>Calculate</div>
+
+            <img class='back' onClick='Back()' src='images/Back.svg' alt="Back"></img>
+      </div>
+<div class='window' id='SR'>
+   <p>The square root of</p> <input type='number' id='SR2' ></input> <p> is </p><p id='SQend'></p>
+                <div onClick='SQ()' class='button'>Calculate</div>
+
+    <img class='back' onClick='Back()' src='images/Back.svg' alt="Back"></img>
+
+</div>
+  
+
+    </div>
+
+</body>
+
+<script>
+    var DP = 2;
+    $('div#percentage').hide();
+    $('div#SR').hide();
+
+    function Back() {
+
+        $('div.window').hide();
+
+    }
+function SQ(){
+    var SQ=document.getElementById('SR2').value;
+
+    document.getElementById('SQend').innerHTML=(Math.sqrt(SQ)).toFixed(DP);
+}
+    function Percentage4() {
+        document.getElementById('perEnd4').innerHTML = ((document.getElementById('per8').value * 100) / document.getElementById('per7').value).toFixed(DP);
+    }
+
+    function Percentage3() {
+        document.getElementById('perEnd3').innerHTML = ((((document.getElementById('per6').value) - document.getElementById('per5').value) / document.getElementById('per5').value) * 100).toFixed(DP) + "%";
+    }
+
+    function Percentage2() {
+        document.getElementById('perEnd2').innerHTML = ((((document.getElementById("per3").value) * 100) / document.getElementById('per4').value).toFixed(DP) + "% ");
+    }
+
+    function Percentage() {
+        document.getElementById('perEnd').innerHTML = 'is  ' + (((document.getElementById('per1').value) / 100) * document.getElementById('per2').value).toFixed(DP);
+    }
+
+    function Visibility(id) {
+        $("#" + id).toggle();
+    }
+
+
+    const maxFiles = 50;
+
+    const randomEl = document.getElementById("random");
+
+    function randombg() {
+
+        var random = Math.floor(Math.random() * maxFiles) + 1;
+
+        randomEl.style.backgroundImage = `url('images/ (${random}).jpeg')`;
+
+
+
+    }
+    randombg();
+
+    function TextArea() {
+        if (typeof(Storage) !== "undefined") {
+            if (localStorage.getItem("textarea") == null) {
+                textarea = document.getElementById('shortText').value;
+                localStorage.setItem("textarea", textarea);
+
+            } else {
+                document.getElementById('shortText').innerHTML = localStorage.getItem("textarea");
+                console.log("Hi");
+
+            }
+        } else {
+            console.warn("No localStorage supported!!!");
+        }
+    }
+
+    function SaveTextArea() {
+        localStorage.setItem("textarea", document.getElementById('shortText').value);
+    }
+    Time();
+
+    function Time() {
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('clock').innerHTML =
+            h + ":" + m + ":" + s;
+        var t = setTimeout(Time, 500);
+    }
+
+    function checkTime(i) {
+        if (i < 10) {
+            i = "0" + i
+        }; // add zero in front of numbers < 10
+        return i;
+    }
+
+</script>
+
+</html>
