@@ -1,4 +1,5 @@
 * {
+    font-family: RobotoThin;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -6,8 +7,51 @@
     transition: 1s;
     box-sizing: border-box;
     background-repeat: no-repeat;
+    
 }
-
+html{
+    animation-delay: 1s;
+     animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+}
+@font-face {
+    font-family: RobotoThin;
+    src: url(font/Roboto-Thin.ttf);
+}
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 div#menu {
     left: 0;
     position: absolute;
@@ -100,93 +144,193 @@ div#menu > * {
     transition: 0.8s;
 }
 
-div#menu > *:hover {
+div#menu > *:hover:not(div) {
     transform: scale(1.15, 1.15);
 }
-div#SR{z-index:6}
-div.button{
+
+div#SR {
+    z-index: 6
+}
+
+div.button {
     display: inline-block;
     padding: calc(0.2vh + 0.2vw);
     margin-left: calc(0.7vh + 0.7vw);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    border-radius:0.2em;
-    background-color:white;
-    font-size:2vmax;
+    border-radius: 0.2em;
+    background-color: white;
+    font-size: 2vmax;
 }
-div.button:hover{
-    transform:scale(1.1,1.1);
+
+div.button:hover {
+    transform: scale(1.1, 1.1);
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     border-radius: 0;
-    
+
 }
-div#MathLabel{
-    
-    transform:translate(0%);
- position:fixed;
-    width:20vw;
-    left:40vw;
-    padding-top:1vh;
-        padding-bottom:1vh;
 
-    border-bottom-right-radius:1em;
-        border-bottom-left-radius:1em;
-
-    font-size:3vmax;
-    top:0;
-    text-align:center;
-    background-color:black;
-    color:white;
-    
-}
-hr{width:100%}
-
-
-div.window{
-    
+div#bottomClock {
+    position: absolute;
+    bottom: 0;
     display: flex;
-  align-items: center;
-  justify-content: center;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+    font-size: 3vmax;
+    background-color: white;
+    opacity: 1;
+    left: 0;
+    width: 5vw;
+}
+
+
+div#MathLabel {
+
+    transform: translate(0%);
+    position: fixed;
+    width: 20vw;
+    left: 40vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+
+    border-bottom-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+
+    font-size: 3vmax;
+    top: 0;
+    text-align: center;
+    background-color: black;
+    color: white;
+
+}
+
+hr {
+    width: 100%
+}
+
+
+div.window {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
-    padding:calc(2vh + 2vw);
-    height:100vh;
-    width:95vw;   
-    background-color:white;
-    position:absolute;
-    left:0;
-    top:0;
-    display:none;
+    padding: calc(2vh + 2vw);
+    height: 100vh;
+    width: 95vw;
+    background-color: white;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: none;
     white-space: nowrap;
-    display:flex;
-    flex-wrap:wrap;
-    background-color:#ecf0f1;
-}
-img.back{
-    position:fixed;
-    right:2vw;
-    bottom:2vw;
-    height:10vh;
-}
-img.back:hover{
-transform:scale(1.1,1.1);
-}
-div.window>input{
-    height:5vh;
-    font-size:2vmax;
-    width:10ch;
-    border:none;
-    border-bottom:1px solid black;
-    text-align:center;
-    background-color:#ecf0f1;
-    
-    
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ecf0f1;
+    margin-left: 5vw;
 }
 
-div.window>p{
-    font-size:2vmax;
-    margin-left:1vmax;
-    margin-right:1vmax;
+div#specialRed {
+    background-color: transparent;
+    font-size: 4vmax;
+    color: black;
+    border-radius: 0em;
+    padding: 5vh;
+    letter-spacing: 1vw;
+    background-color: white;
+
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    text-align: center;
+    bottom: 5vh;
+}
+
+h1#scoreEnd,
+h1#highScore,
+h1#GamesPlayed {
+    width: 100v;
+    text-align: center;
+    margin-top: 3vh;
+    font-size: 4vmax;
+}
+
+div#specialRed:hover {
+    background-color: red;
+    color: white;
+    border-radius: 10em;
+    width: auto;
+    bottom: 6vh;
+}
+
+img.back {
+    position: fixed;
+    right: 2vw;
+    bottom: 2vw;
+    height: 10vh;
+}
+
+img.back:hover {
+    transform: scale(1.1, 1.1);
+}
+
+div.window > input {
+    height: 5vh;
+    font-size: 2vmax;
+    width: 10ch;
+    border: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+    background-color: #ecf0f1;
+
 
 }
+
+div#gamesDIV {
+    display: block;
+    padding: 0;
+}
+
+input#answer {
+    width: 30vw;
+    background-color: white;
+    font-size: 5vmax;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    position: absolute;
+    left: 35vw;
+    bottom: 20vh;
+    text-align: center;
+}
+
+p#expression {
+    color: white;
+    text-align: center;
+    width: 100vw;
+    font-size: 10vmax;
+    top: 30vh;
+    position: absolute;
+}
+
+div.window > p {
+    font-size: 2vmax;
+    margin-left: 1vmax;
+    margin-right: 1vmax;
+
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 div#clock {
     position: absolute;
     left: 10vw;
@@ -211,13 +355,19 @@ div#mathDIV {
     background-color: #ecf0f1;
     z-index: 5;
     display: none;
-    padding:calc(1vh + 1vw);
-    
+    padding: calc(1vh + 1vw);
+
 }
 
 div#clock:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     border-radius: 0;
+    opacity: 1;
+}
+
+::selection {
+    background-color: red;
+    color: white;
 }
 
 div#clock:focus {
@@ -251,6 +401,22 @@ div#calculator {
     background-color: white;
     border-radius: 0.5em;
     opacity: 0.8;
+}
+
+div#score {
+    color: white;
+    position: absolute;
+    top: 5vh;
+    right: 5vh;
+    font-size: 4vmax;
+}
+
+div#time {
+    color: white;
+    position: absolute;
+    top: 5vh;
+    left: 5vh;
+    font-size: 4vmax;
 }
 
 div#calculator:hover {

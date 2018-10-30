@@ -8,9 +8,12 @@
     <title>ACS OS</title>
 </head>
 
-<body onload='TextArea()' id='random'>
+<body id='random'>
     <div id='menu'>
         <img onClick="Visibility('mathDIV');" draggable="false" src='images/Math.svg' id='math'></img>
+        <img onClick="Visibility('gamesDIV');" draggable="false" src='images/games.svg' id='math'></img>
+
+        <div id='bottomClock'></div>
     </div>
     <div id="clock"></div>
     <div id="calculator">
@@ -65,7 +68,7 @@
     </div>
 
 
-    <textarea onchange='SaveTextArea()' onkeyup='SaveTextArea()' placeholder='Write here...' id='shortText'></textarea>
+    <textarea onchange='Set(textarea,this.value)' onkeyup='Set("textarea",this.value)' placeholder='Write here...' id='shortText'></textarea>
     <div id='mathDIV'>
         <div id='MathLabel'>Calculators</div>
         <div onClick='$("div#percentage").show();' class='button'>Percentage</div>
@@ -96,35 +99,285 @@
             <div onClick='Percentage4()' class='button'>Calculate</div>
 
             <img class='back' onClick='Back()' src='images/Back.svg' alt="Back"></img>
-      </div>
-<div class='window' id='SR'>
-   <p>The square root of</p> <input type='number' id='SR2' ></input> <p> is </p><p id='SQend'></p>
-                <div onClick='SQ()' class='button'>Calculate</div>
+        </div>
+        <div class='window' id='SR'>
+            <p>The square root of</p> <input type='number' id='SR2'></input>
+            <p> is </p>
+            <p id='SQend'></p>
+            <div onClick='SQ()' class='button'>Calculate</div>
 
-    <img class='back' onClick='Back()' src='images/Back.svg' alt="Back"></img>
+            <img class='back' onClick='Back()' src='images/Back.svg' alt="Back"></img>
 
-</div>
-  
+        </div>
+
 
     </div>
+    <div class='window' id='gamesDIV'>
+        <h1 id='scoreEnd'>Score</h1>
+        <h1 id='highScore'>HightScore</h1>
+        <h1 id='GamesPlayed'>GamesPlayed</h1>
 
+        </center>
+        <div class='button' onClick='prepareGame()' id='specialRed'>Start</div>
+        <div id='gameWindow'>
+            <div style='white-space: nowrap;'>
+                <p id='expression'>5-3</p>
+            </div>
+            <div id='score'>0</div>
+            <div id='time'>5</div>
+            <input onchange='CheckResult()' onkeyup='CheckResult()' id='answer' placeholder='Answer' type='number'></input>
+            <center>
+
+
+
+        </div>
+    </div>
 </body>
 
 <script>
-    var DP = 2;
+ 
+    var DP = 10;
+    var topUp = 2;
+    var result;
+    var score = window.localStorage['score'];
+    var game = false;
+    var Gsec = 5;
+    var lastExp = null;
+    var TimerFnc;
+    var highScore = Get('highScore');
+    var scoreEndValue = Get('score');
+    var GamesPlayed = Get('GamesPlayed');
     $('div#percentage').hide();
     $('div#SR').hide();
+    $('div#gamesDIV').hide();
+    $('div#gameWindow').hide();
+    document.getElementById('scoreEnd').innerHTML = "Score: " + Get('score');
+    document.getElementById('highScore').innerHTML = "Highscore: " + Get('highScore');
+    document.getElementById('shortText').innerHTML = Get('textarea', " ");
+    document.getElementById('GamesPlayed').innerHTML = "Games played: " + Get('GamesPlayed');
+
+    function Get(name, alt) {
+        if (typeof Storage !== "undefined") {
+            var value = localStorage.getItem("'" + name + "'");
+            if (value === null) {
+                if (alt == undefined) {
+                    localStorage.setItem("'" + name + "'", "0");
+                    console.log(name, alt);
+                    return 0;
+                } else {
+                    localStorage.setItem("'" + name + "'", alt);
+                    return alt;
+                    console.log(name, alt);
+
+                }
+                return 0;
+            } else {
+                return value;
+            }
+        } else {
+            console.log('No localStorage supported. Oh, please chage your browser!');
+        }
+    }
+
+    function IsFullScreen() {
+        if (
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function ExitFullScreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+
+    function fullScreen(elem) {
+        var i = elem;
+
+        // go full-screen
+        if (i.requestFullscreen) {
+            i.requestFullscreen();
+        } else if (i.webkitRequestFullscreen) {
+            i.webkitRequestFullscreen();
+        } else if (i.mozRequestFullScreen) {
+            i.mozRequestFullScreen();
+        } else if (i.msRequestFullscreen) {
+            i.msRequestFullscreen();
+        }
+    }
+
+
+
+
+    function Set(name, value) {
+        if (typeof Storage !== "undefined") {
+            localStorage.setItem("'" + name + "'", value);
+        } else {
+            console.log('No localStorage supported. Oh, please chage your browser!');
+        }
+    }
+
+    function prepareGame() {
+
+        document.getElementById('answer').value = null;
+        score = 0;
+        $('div#specialRed').hide();
+        $('div#menu').hide();
+        $('div#gameWindow').show();
+
+        $("div#gamesDIV").css("margin-left", "0");
+        $("div#gamesDIV").css("width", "100vw");
+
+        $("div#gamesDIV").css("background-color", "black");
+        Start();
+        TimerFnc = setInterval(Timer, 1000);
+        game = true;
+        Gsec = 5;
+        fullScreen(document.body);
+    }
+
+    function Timer() {
+        if (Gsec > 0) {
+            Gsec--;
+            console.log("Remaining seconds", Gsec);
+            // document.getElementById('time').innerHTML="5";
+            document.getElementById('time').innerHTML = Gsec;
+
+        } else {
+            game = false;
+            EndGame();
+        }
+    }
+
+    var num1, num2;
+
+    function Start() {
+
+        document.getElementById("answer").focus();
+        game = true;
+        console.log('Starting generating numbers.');
+        num1 = Math.round(Math.random() * topUp);
+        num2 = Math.round(Math.random() * topUp);
+        var sign = Math.round(Math.random() * 2);
+        console.log(num1, num2, sign);
+        if (sign == 1) {
+            sign = '+';
+            result = num1 + num2;
+        } else {
+            sign = '-';
+            if (num1 <= num2) {
+                num1 = Math.round(Math.random() * topUp);
+                num2 = Math.round(Math.random() * (num1));
+                result = num1 - num2;
+            } else {
+                result = num1 - num2;
+            }
+        }
+        console.log(num1, num2, sign);
+        if (lastExp == (num1 + sign + num2)) {
+            Start();
+        } else {
+            document.getElementById('expression').innerHTML = num1 + sign + num2;
+            lastExp = num1 + sign + num2;
+        }
+    }
+
+    function EndGame() {
+        GamesPlayed++;
+        Set("GamesPlayed", GamesPlayed);
+        game = false;
+        clearInterval(TimerFnc);
+        if (score > highScore) {
+            highScore = score;
+        }
+        document.getElementById('highScore').innerHTML = "Highscore: " + highScore;
+        document.getElementById('scoreEnd').innerHTML = "Score: " + score;
+
+        $('div#specialRed').show();
+        $('div#menu').show();
+        $('div#gameWindow').hide();
+
+        $("div#gamesDIV").css("margin-left", "5vw");
+        $("div#gamesDIV").css("width", "95vw");
+
+        $("div#gamesDIV").css("background-color", "white");
+        console.log(score, highScore);
+
+        Set('highScore', highScore);
+        Set('score', score);
+
+        window.localStorage['score'] = score;
+
+        console.log(score, highScore);
+        ExitFullScreen();
+
+    }
+    /////ANTI CHEATING
+    window.onresize = function() {
+        if ((window.outerHeight - window.innerHeight) > 100) {
+            if (game == true) {
+                EndGame();
+                alert('Cheating!!!');
+            }
+        }
+        if ((window.outerWidth - window.innerWidth) > 100) {
+            if (game == true) {
+                EndGame();
+                alert('Cheating!!!');
+            }
+        }
+    }
+    window.onfocus = function() {
+        isTabActive = true;
+    };
+
+    window.onblur = function() {
+        if (game == true) {
+            EndGame();
+            alert('Cheating!!!');
+        }
+    };
+    ///////////ANTI CHEATING ENDS
+    function CheckResult() {
+        if (result == document.getElementById('answer').value) {
+            Gsec = 5;
+            //  document.getElementById('time').innerHTML="5";
+            document.getElementById('time').innerHTML = Gsec;
+            console.log('True');
+            topUp = Math.round(topUp * 1.4);
+            document.getElementById('answer').value = null;
+            Start();
+            score = score + 1;
+            document.getElementById('score').innerHTML = score;
+        } else {
+            console.log('false');
+        }
+    }
 
     function Back() {
 
         $('div.window').hide();
 
     }
-function SQ(){
-    var SQ=document.getElementById('SR2').value;
 
-    document.getElementById('SQend').innerHTML=(Math.sqrt(SQ)).toFixed(DP);
-}
+    function SQ() {
+        var SQ = document.getElementById('SR2').value;
+
+        document.getElementById('SQend').innerHTML = (Math.sqrt(SQ)).toFixed(DP);
+    }
+
     function Percentage4() {
         document.getElementById('perEnd4').innerHTML = ((document.getElementById('per8').value * 100) / document.getElementById('per7').value).toFixed(DP);
     }
@@ -159,27 +412,7 @@ function SQ(){
 
 
     }
-    randombg();
-
-    function TextArea() {
-        if (typeof(Storage) !== "undefined") {
-            if (localStorage.getItem("textarea") == null) {
-                textarea = document.getElementById('shortText').value;
-                localStorage.setItem("textarea", textarea);
-
-            } else {
-                document.getElementById('shortText').innerHTML = localStorage.getItem("textarea");
-                console.log("Hi");
-
-            }
-        } else {
-            console.warn("No localStorage supported!!!");
-        }
-    }
-
-    function SaveTextArea() {
-        localStorage.setItem("textarea", document.getElementById('shortText').value);
-    }
+  randombg();
     Time();
 
     function Time() {
@@ -187,17 +420,21 @@ function SQ(){
         var h = today.getHours();
         var m = today.getMinutes();
         var s = today.getSeconds();
+        h = checkTime(h);
         m = checkTime(m);
         s = checkTime(s);
         document.getElementById('clock').innerHTML =
             h + ":" + m + ":" + s;
+        document.getElementById('bottomClock').innerHTML =
+            h + "</br>" + m;
         var t = setTimeout(Time, 500);
     }
 
     function checkTime(i) {
         if (i < 10) {
-            i = "0" + i
-        }; // add zero in front of numbers < 10
+            i = "0" + i;
+            //  console.log('Zero Added');
+        };
         return i;
     }
 
